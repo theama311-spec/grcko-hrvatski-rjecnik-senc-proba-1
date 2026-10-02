@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grčko-hrvatski rječnik</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-title">Grčko-hrvatski rječnik</div>
+    <div class="brand-subtitle">Radna digitalna verzija</div>
+  </div>
+  <div class="actions">
+    <button id="newEntry">+ Nova</button>
+    <button id="importBtn">Uvezi</button>
+    <button id="exportBtn">Izvezi</button>
+    <button id="publishBtn" class="publish-btn">Objavi</button>
+    <button id="themeBtn" title="Promijeni temu">Tema</button>
+    <input id="fileInput" type="file" accept=".json" hidden>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="searchbox">
+      <input id="search" type="search" placeholder="Pretraži rječnik…" autocomplete="off">
+      <button id="clearSearch" title="Očisti">×</button>
+    </div>
+    <div class="filter-row">
+      <select id="searchMode" aria-label="Način pretraživanja">
+        <option value="all">Sve</option>
+        <option value="lemma">Natuknice</option>
+        <option value="meaning">Značenja</option>
+      </select>
+      <span id="count"></span>
+    </div>
+    <div class="letters" id="letters"></div>
+    <div class="entry-list" id="entryList"></div>
+  </aside>
+
+  <main class="content">
+    <div id="welcome" class="welcome">
+      <h1>Grčko-hrvatski rječnik</h1>
+      <p>Odaberite natuknicu s lijeve strane ili upotrijebite pretraživanje.</p>
+    </div>
+
+    <article id="entryView" class="entry-view hidden"></article>
+
+    <section id="editor" class="editor hidden">
+      <div class="editor-head">
+        <h2 id="editorTitle">Nova natuknica</h2>
+        <button id="closeEditor">Zatvori</button>
+      </div>
+      <label>Natuknica
+        <input id="editLemma" type="text">
+      </label>
+      <label>Unos
+        <textarea id="editText" rows="10"></textarea>
+      </label>
+      <div class="editor-actions">
+        <button id="saveEntry" class="primary">Spremi</button>
+        <button id="deleteEntry" class="danger">Obriši</button>
+      </div>
+      <p class="note"><strong id="saveStatus">Promjene se spremaju na ovom uređaju.</strong><br>
+Za sigurnosnu kopiju povremeno odaberite „Izvezi“. Izvoz spremite na sigurno mjesto.</p>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
