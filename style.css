@@ -66,10 +66,6 @@ button{cursor:pointer}
   .entry-row .lemma{font-size:18px}
   .entry-row .preview{font-size:12px}
   .content{padding:0 14px 30px}
-  /* Kad se na mobitelu odabere natuknica, sakrij popis i odmah prikaži
-     otvoreni zapis. Tako korisnik ne mora skrolati kroz cijeli popis. */
-  body.entry-selected .sidebar{display:none}
-  body.entry-selected .content{display:block;padding-top:0}
   .welcome{display:none}
   .entry-view{padding:22px 4px}
   .entry-title{font-size:32px;margin-bottom:10px}
@@ -82,4 +78,24 @@ button{cursor:pointer}
 .publish-btn{font-weight:600}
 @media(max-width:800px){
   .actions{grid-template-columns:repeat(3,1fr)}
+}
+
+:root{--font-scale:1}
+.entry-title{font-size:calc(38px * var(--font-scale))}
+.entry-body{font-size:calc(18px * var(--font-scale))}
+.entry-row .lemma{font-size:calc(17px * var(--font-scale))}
+.entry-row .preview{font-size:calc(12px * var(--font-scale))}
+mark{background:#ffe08a;color:inherit;border-radius:2px;padding:0 .08em}
+.entry-link{border:0;background:transparent;color:var(--accent);padding:0;text-decoration:underline;text-decoration-style:dotted;cursor:pointer;font:inherit}
+.entry-tools{flex-wrap:wrap}
+.entry-tools button:disabled{opacity:.45;cursor:default}
+@media(max-width:800px){
+  body.entry-open .sidebar{display:none}
+  body.entry-open .content{display:block;padding-top:0}
+  .entry-view{min-height:calc(100vh - 115px)}
+  .mobile-back{position:sticky;top:0;z-index:6;background:var(--panel)}
+  .entry-title{font-size:calc(32px * var(--font-scale))}
+  .entry-body{font-size:calc(18px * var(--font-scale))}
+  .actions{grid-template-columns:repeat(4,1fr)}
+  .actions button{font-size:13px}
 }
