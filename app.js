@@ -91,12 +91,11 @@ function showEntry(id){
   $("backToList").onclick=()=>{ view.classList.add("hidden"); selectedId=null; renderList(); };
   renderList();
 
-  // Nakon odabira natuknice na mobitelu automatski prikaži otvoreni zapis.
-  // Na računalu sadržaj ostaje u desnom stupcu pa nema potrebe za pomicanjem.
+  // Nakon odabira natuknice automatski prikaži otvoreni zapis na vrhu prikaza.
+  // To vrijedi i na mobitelu i na računalu, tako da korisnik ne mora ručno
+  // tražiti otvorenu natuknicu nakon klika na stavku pri dnu popisa.
   requestAnimationFrame(()=>{
-    if(window.matchMedia("(max-width: 800px)").matches){
-      view.scrollIntoView({behavior:"smooth", block:"start"});
-    }
+    view.scrollIntoView({behavior:"smooth", block:"start"});
   });
 }
 function openEditor(id=null){
