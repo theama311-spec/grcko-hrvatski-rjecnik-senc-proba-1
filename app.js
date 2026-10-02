@@ -81,6 +81,9 @@ function renderAll(){ renderLetters(); renderList(); }
 function showEntry(id){
   const e=entries.find(x=>x.id===id); if(!e)return;
   selectedId=id; welcome.classList.add("hidden"); editor.classList.add("hidden"); view.classList.remove("hidden");
+  // Na mobitelu se nakon klika odmah prebacujemo iz popisa u otvorenu natuknicu.
+  // Na računalu ostaje popis lijevo, a stranica se pomakne do otvorene natuknice.
+  document.body.classList.add("entry-selected");
   view.innerHTML=`
     <button class="mobile-back" id="backToList">← Natrag na natuknice</button>
     <div class="entry-meta">Natuknica</div>
@@ -88,17 +91,29 @@ function showEntry(id){
     <div class="entry-body">${esc(e.text)}</div>
     <div class="entry-tools"><button id="editBtn">Uredi</button></div>`;
   $("editBtn").onclick=()=>openEditor(id);
-  $("backToList").onclick=()=>{ view.classList.add("hidden"); selectedId=null; renderList(); };
+  $("backToList").onclick=()=>{
+    view.classList.add("hidden");
+    selectedId=null;
+    document.body.classList.remove("entry-selected");
+    renderList();
+  };
   renderList();
 
   // Nakon odabira natuknice automatski prikaži otvoreni zapis na vrhu prikaza.
   // To vrijedi i na mobitelu i na računalu, tako da korisnik ne mora ručno
   // tražiti otvorenu natuknicu nakon klika na stavku pri dnu popisa.
-  requestAnimationFrame(()=>{
-    view.scrollIntoView({behavior:"smooth", block:"start"});
-  });
+  const jumpToEntry = () => {
+    const topbar = document.querySelector(".topbar");
+    const offset = (topbar ? topbar.getBoundingClientRect().height : 0) + 8;
+    const y = view.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({top: Math.max(0, y), behavior:"smooth"});
+  };
+  // Dva prolaza pomažu i nakon promjene layouta na mobitelu.
+  requestAnimationFrame(jumpToEntry);
+  setTimeout(jumpToEntry, 80);
 }
 function openEditor(id=null){
+  document.body.classList.remove("entry-selected");
   setSaveStatus("Uređivanje: promjene će se spremiti kad kliknete „Spremi“.");
   editor.classList.remove("hidden"); view.classList.add("hidden"); welcome.classList.add("hidden");
   const e=id?entries.find(x=>x.id===id):null;

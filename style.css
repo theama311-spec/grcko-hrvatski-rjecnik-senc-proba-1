@@ -66,6 +66,10 @@ button{cursor:pointer}
   .entry-row .lemma{font-size:18px}
   .entry-row .preview{font-size:12px}
   .content{padding:0 14px 30px}
+  /* Kad se na mobitelu odabere natuknica, sakrij popis i odmah prikaži
+     otvoreni zapis. Tako korisnik ne mora skrolati kroz cijeli popis. */
+  body.entry-selected .sidebar{display:none}
+  body.entry-selected .content{display:block;padding-top:0}
   .welcome{display:none}
   .entry-view{padding:22px 4px}
   .entry-title{font-size:32px;margin-bottom:10px}
