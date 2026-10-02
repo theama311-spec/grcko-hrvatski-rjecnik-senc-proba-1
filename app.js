@@ -107,18 +107,24 @@ function renderAll(){renderLetters();renderList();}
 function isMobile(){return window.matchMedia("(max-width:800px)").matches;}
 function saveReturnState(){
   if(returnState) return;
-  returnState={windowY:window.scrollY, listTop:listEl.scrollTop, letter:currentLetter, query:search.value};
+  returnState={windowY:window.scrollY, listTop:listEl.scrollTop, letter:currentLetter, query:search.value, selectedId};
 }
 function restoreReturnState(){
   document.body.classList.remove("entry-open");
   if(returnState){
-    currentLetter=returnState.letter||"";
-    search.value=returnState.query||"";
+    const state=returnState;
+    currentLetter=state.letter||"";
+    search.value=state.query||"";
+    selectedId=state.selectedId??null;
     renderAll();
-    requestAnimationFrame(()=>{
-      listEl.scrollTop=returnState.listTop||0;
-      window.scrollTo({top:returnState.windowY||0,behavior:"instant"});
-    });
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      listEl.scrollTop=state.listTop||0;
+      window.scrollTo({top:state.windowY||0,behavior:"instant"});
+      if(selectedId!=null){
+        const row=listEl.querySelector(`.entry-row[data-id="${selectedId}"]`);
+        if(row) row.scrollIntoView({behavior:"instant",block:"center"});
+      }
+    }));
   }
   returnState=null;
 }
@@ -131,7 +137,10 @@ function showEntry(id){
   const idx=list.findIndex(x=>x.id===id);
   const prev=idx>0?list[idx-1]:null, next=idx>=0&&idx<list.length-1?list[idx+1]:null;
   view.innerHTML=`
-    <button class="mobile-back" id="backToList" type="button">← Natrag na natuknice</button>
+    <div class="mobile-navigation">
+      <button class="mobile-back" id="backToList" type="button">← Natrag na natuknice</button>
+      <button class="mobile-back" id="backToAlphabet" type="button">↩ Natrag na alfabet</button>
+    </div>
     <div class="entry-meta">Natuknica ${idx>=0?`${idx+1} / ${list.length}`:""}</div>
     <h1 class="entry-title">${esc(e.lemma)}</h1>
     <div class="entry-body">${linkedBody(e.text,e.id)}</div>
@@ -141,7 +150,17 @@ function showEntry(id){
       <button id="editBtn" type="button">Uredi</button>
     </div>`;
   $("editBtn").onclick=()=>openEditor(id);
-  $("backToList").onclick=()=>{view.classList.add("hidden");selectedId=null;restoreReturnState();};
+  $("backToList").onclick=()=>{view.classList.add("hidden");restoreReturnState();};
+  $("backToAlphabet").onclick=()=>{
+    view.classList.add("hidden");
+    document.body.classList.remove("entry-open");
+    returnState=null;
+    selectedId=null;
+    currentLetter="";
+    search.value="";
+    renderAll();
+    requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"instant"}));
+  };
   if(prev) $("prevBtn").onclick=()=>showEntry(prev.id);
   if(next) $("nextBtn").onclick=()=>showEntry(next.id);
   view.querySelectorAll(".entry-link").forEach(b=>b.onclick=()=>showEntry(Number(b.dataset.linkId)));

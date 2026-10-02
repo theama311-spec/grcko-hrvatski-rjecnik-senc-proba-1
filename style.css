@@ -71,7 +71,7 @@ button{cursor:pointer}
   .entry-title{font-size:32px;margin-bottom:10px}
   .entry-body{font-size:18px}
   .editor{margin:14px 0}
-  .mobile-back{display:block!important;margin:0 0 18px;padding:8px 11px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--text)}
+  .mobile-navigation{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.mobile-back{display:block!important;margin:0;padding:8px 11px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--text)}
 }
 @media(min-width:801px){.mobile-back{display:none!important}}
 
@@ -93,7 +93,7 @@ mark{background:#ffe08a;color:inherit;border-radius:2px;padding:0 .08em}
   body.entry-open .sidebar{display:none}
   body.entry-open .content{display:block;padding-top:0}
   .entry-view{min-height:calc(100vh - 115px)}
-  .mobile-back{position:sticky;top:0;z-index:6;background:var(--panel)}
+  .mobile-navigation{position:sticky;top:0;z-index:6;background:var(--panel);padding-bottom:8px}.mobile-back{background:var(--panel)}
   .entry-title{font-size:calc(32px * var(--font-scale))}
   .entry-body{font-size:calc(18px * var(--font-scale))}
   .actions{grid-template-columns:repeat(4,1fr)}
