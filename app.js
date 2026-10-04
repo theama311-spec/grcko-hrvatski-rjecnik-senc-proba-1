@@ -160,6 +160,43 @@ function openEditor(id=null){
 }
 function closeEditor(){editor.classList.add("hidden");if(selectedId)showEntry(selectedId);else welcome.classList.remove("hidden");}
 function duplicateOf(lemma,id){const n=norm(lemma);return entries.find(e=>e.id!==id&&norm(e.lemma)===n);}
+function isCombiningMark(ch){ return /\p{M}/u.test(ch); }
+function applyQuantity(field, kind){
+  if(!field) return;
+  const value=field.value;
+  let start=field.selectionStart ?? value.length;
+  let end=field.selectionEnd ?? start;
+  const mark=kind==="short"?"\u0306":kind==="long"?"\u0304":null;
+  if(start===0 && end===0){
+    alert("Postavite pokazivač odmah iza grčkog samoglasnika ili označite samoglasnik.");
+    field.focus(); return;
+  }
+  // If nothing is selected, take the previous Unicode grapheme (base letter + combining marks).
+  if(start===end){
+    let i=start;
+    while(i>0 && isCombiningMark(value[i-1])) i--;
+    if(i>0) i--;
+    start=i;
+    end=field.selectionStart;
+  }
+  const selected=value.slice(start,end);
+  const decomposed=selected.normalize("NFD");
+  // Quantity belongs on one vowel/grapheme, not on punctuation or a whole phrase.
+  if(!/^\p{L}\p{M}*$/u.test(decomposed)){
+    alert("Označite samo jedan grčki samoglasnik (npr. α, ε, ι, ο, υ, η ili ω), ili stavite pokazivač odmah iza njega.");
+    field.focus(); return;
+  }
+  let cleaned=decomposed.replace(/[\u0304\u0306]/g,"");
+  let replacement=cleaned;
+  if(mark) replacement+=mark;
+  field.setRangeText(replacement,start,end,"end");
+  field.dispatchEvent(new Event("input",{bubbles:true}));
+  field.focus();
+}
+document.querySelectorAll("[data-quantity-field]").forEach(btn=>{
+  btn.addEventListener("click",()=>applyQuantity($(btn.dataset.quantityField),btn.dataset.quantity));
+});
+
 function saveEditor(){
   const lemma=$("editLemma").value.trim(), text=$("editText").value.trim();
   if(!lemma||!text){alert("Upišite natuknicu i tekst unosa.");return;}

@@ -99,3 +99,32 @@ mark{background:#ffe08a;color:inherit;border-radius:2px;padding:0 .08em}
   .actions{grid-template-columns:repeat(4,1fr)}
   .actions button{font-size:13px}
 }
+
+/* Greek polytonic/quantity support: prefer fonts with robust combining-mark placement. */
+.entry-title,.entry-body,.entry-row .lemma,.editor input,.editor textarea{
+  font-family:"Noto Serif","Noto Serif Greek","DejaVu Serif","Times New Roman",Georgia,serif;
+  font-variant-ligatures:normal;
+  font-kerning:normal;
+}
+.quantity-tools{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:8px;
+  margin-bottom:4px;
+}
+.quantity-label{font-size:12px;color:var(--muted);margin-right:2px}
+.quantity-tools button{
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  border-radius:6px;
+  padding:5px 8px;
+  cursor:pointer;
+}
+.quantity-tools button:hover{background:var(--accent2)}
+.quantity-tools-text{margin-top:8px;margin-bottom:12px}
+@media(max-width:800px){
+  .quantity-tools button{padding:7px 9px;font-size:14px}
+}

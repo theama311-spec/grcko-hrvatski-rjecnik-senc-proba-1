@@ -59,15 +59,27 @@
       <label>Natuknica
         <input id="editLemma" type="text">
       </label>
+      <div class="quantity-tools" aria-label="Grčka količina samoglasnika">
+        <span class="quantity-label">Količina:</span>
+        <button type="button" data-quantity-field="editLemma" data-quantity="short" title="Dodaj kratinu (breve) na samoglasnik ispred pokazivača ili na označeni samoglasnik">◡ Kratko</button>
+        <button type="button" data-quantity-field="editLemma" data-quantity="long" title="Dodaj dužinu (makron) na samoglasnik ispred pokazivača ili na označeni samoglasnik">¯ Dugo</button>
+        <button type="button" data-quantity-field="editLemma" data-quantity="remove" title="Ukloni kratinu/dužinu">× Ukloni</button>
+      </div>
       <label>Unos
         <textarea id="editText" rows="10"></textarea>
       </label>
+      <div class="quantity-tools quantity-tools-text" aria-label="Grčka količina u unosu">
+        <span class="quantity-label">Količina u unosu:</span>
+        <button type="button" data-quantity-field="editText" data-quantity="short">◡ Kratko</button>
+        <button type="button" data-quantity-field="editText" data-quantity="long">¯ Dugo</button>
+        <button type="button" data-quantity-field="editText" data-quantity="remove">× Ukloni</button>
+      </div>
       <div class="editor-actions">
         <button id="saveEntry" class="primary">Spremi</button>
         <button id="deleteEntry" class="danger">Obriši</button>
       </div>
       <p class="note"><strong id="saveStatus">Promjene se spremaju na ovom uređaju.</strong><br>
-Prije svake izmjene prethodna verzija se čuva kao lokalna sigurnosna kopija. „Izvezi“ preuzima trenutni rječnik kao dodatnu sigurnosnu kopiju.</p>
+Kratina (◡) i dužina (¯) unose se kao pravi Unicode kombinirajući znakovi i ostaju pravilno vezane uz samoglasnik. Prije svake izmjene prethodna verzija se čuva kao lokalna sigurnosna kopija. „Izvezi“ preuzima trenutni rječnik kao dodatnu sigurnosnu kopiju.</p>
     </section>
   </main>
 </div>
