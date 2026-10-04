@@ -1,13 +1,7 @@
-# Grčko-hrvatski rječnik — Senec (radna verzija)
+# Grčko-hrvatski rječnik — Senc (radna digitalna verzija)
 
-Ovo je početna radna digitalna verzija novog rječnika.
+Ova GitHub verzija koristi stabilno sučelje prethodnih rječnika: pretraživanje, alfabet, otvaranje natuknice, prethodna/sljedeća natuknica, povratak na popis, povećanje/smanjenje teksta, uređivanje, uvoz/izvoz i temu.
 
-Početne natuknice unesene su iz dostavljenog materijala Senečeva *Grčko-hrvatskog rječnika* (OCR materijal, str. 4–8). Zbog OCR pogrešaka sadržaj treba postupno provjeravati i uređivati.
+Sadržaj `rjecnik.json` obrađen je iz dostavljenog OCR PDF-a i prošao ciljanu PDF–JSON kontrolu jakih kandidata.
 
-Datoteke:
-- `index.html` — sučelje
-- `app.js` — logika rječnika
-- `style.css` — izgled
-- `rjecnik.json` — sadržaj natuknica
-
-Za buduće izmjene sadržaja rječnika mijenja se samo `rjecnik.json`, dok se programske datoteke ne diraju osim ako namjerno mijenjamo funkcionalnost.
+Za buduće izmjene sadržaja mijenja se samo `rjecnik.json`; programske datoteke ne treba dirati osim ako se namjerno mijenja funkcionalnost.
